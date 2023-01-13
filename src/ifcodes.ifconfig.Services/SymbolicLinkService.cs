@@ -92,7 +92,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_APPLYING_CONFIGURATION, ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration.", ex);
             }
         }
 

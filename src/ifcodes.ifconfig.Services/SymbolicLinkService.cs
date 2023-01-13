@@ -60,9 +60,18 @@ namespace ifcodes.ifconfig.Services
                         {
                             _logger.Log(LogLevel.Trace, "target directory does not exist at " + absoluteTargetDirectory + " ...");
 
-                            _logger.Log(LogLevel.Trace, "attempting to create directory " + absoluteTargetDirectory + "... ");
+                            _logger.Log(LogLevel.Trace, "attempting to create target directory " + absoluteTargetDirectory + "... ");
 
-                            _fileSystem.Directory.CreateDirectory(absoluteTargetDirectory);
+                            IDirectory directory = (IDirectory)_fileSystem.Directory.CreateDirectory(absoluteTargetDirectory);
+
+                            if (directory.Exists(absoluteTargetDirectory))
+                            {
+                                _logger.Log(LogLevel.Trace, "successfully created target directory at " + absoluteTargetDirectory + " ...");
+                            }
+                        }
+                        else
+                        {
+                            _logger.Log(LogLevel.Trace, "target directory exists ... continuing application configuration process ...");
                         }
 
                         string sourceFileName = _fileSystem.Path.GetFileName(sourceAbsoluteFilePath);

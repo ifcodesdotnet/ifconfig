@@ -15,7 +15,7 @@ namespace ifcodes.ifconfig.Repoistory
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_GETTING_USER_HOME_DIRECTORY, ex); 
+                throw new Exception("unrecoverable error occurred while getting user home directory.", ex); 
             }
         }
     }

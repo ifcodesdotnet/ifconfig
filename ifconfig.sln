@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ifcodes.ifconfig.Console", "src\ifcodes.ifconfig.Console\ifcodes.ifconfig.Console.csproj", "{A8A018B2-27EE-4731-8F0A-675735770959}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ifcodes.ifconfig.Repoistory", "src\ifcodes.ifconfig.Repoistory\ifcodes.ifconfig.Repoistory.csproj", "{1F5C3339-8920-4849-BB11-0E74D07A9605}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ifcodes.ifconfig.Services", "src\ifcodes.ifconfig.Services\ifcodes.ifconfig.Services.csproj", "{43F43413-3B43-4EC8-8310-D56E32F5B19E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ifcodes.ifconfig.Types", "src\ifcodes.ifconfig.Types\ifcodes.ifconfig.Types.csproj", "{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|Any CPU = debug|Any CPU
+		debug-uac|Any CPU = debug-uac|Any CPU
+		distributable|Any CPU = distributable|Any CPU
+		distributable-uac|Any CPU = distributable-uac|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8A018B2-27EE-4731-8F0A-675735770959}.debug|Any CPU.ActiveCfg = debug|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.debug|Any CPU.Build.0 = debug|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.debug-uac|Any CPU.ActiveCfg = debug-uac|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.debug-uac|Any CPU.Build.0 = debug-uac|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.distributable|Any CPU.ActiveCfg = distributable|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.distributable|Any CPU.Build.0 = distributable|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.distributable-uac|Any CPU.ActiveCfg = distributable-uac|Any CPU
+		{A8A018B2-27EE-4731-8F0A-675735770959}.distributable-uac|Any CPU.Build.0 = distributable-uac|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.debug|Any CPU.ActiveCfg = debug|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.debug|Any CPU.Build.0 = debug|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.debug-uac|Any CPU.ActiveCfg = debug-uac|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.debug-uac|Any CPU.Build.0 = debug-uac|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.distributable|Any CPU.ActiveCfg = distributable|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.distributable|Any CPU.Build.0 = distributable|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.distributable-uac|Any CPU.ActiveCfg = distributable-uac|Any CPU
+		{1F5C3339-8920-4849-BB11-0E74D07A9605}.distributable-uac|Any CPU.Build.0 = distributable-uac|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.debug|Any CPU.ActiveCfg = debug|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.debug|Any CPU.Build.0 = debug|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.debug-uac|Any CPU.ActiveCfg = debug-uac|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.debug-uac|Any CPU.Build.0 = debug-uac|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.distributable|Any CPU.ActiveCfg = distributable|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.distributable|Any CPU.Build.0 = distributable|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.distributable-uac|Any CPU.ActiveCfg = distributable-uac|Any CPU
+		{43F43413-3B43-4EC8-8310-D56E32F5B19E}.distributable-uac|Any CPU.Build.0 = distributable-uac|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.debug|Any CPU.ActiveCfg = debug|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.debug|Any CPU.Build.0 = debug|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.debug-uac|Any CPU.ActiveCfg = debug-uac|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.debug-uac|Any CPU.Build.0 = debug-uac|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.distributable|Any CPU.ActiveCfg = distributable|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.distributable|Any CPU.Build.0 = distributable|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.distributable-uac|Any CPU.ActiveCfg = distributable-uac|Any CPU
+		{09796A78-D250-4F7A-B4AA-FF89CDE0EB68}.distributable-uac|Any CPU.Build.0 = distributable-uac|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3217F43E-5C13-4CF5-95E9-A3DDDD46BD2C}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ifconfig": {
+      "commandName": "Project",
+      "commandLineArgs": "apply --app autohotkey --targets C:\\Users\\arbit\\.iffiles\\targets.json"
+    }
+  }
+}

@@ -33,13 +33,13 @@ namespace ifcodes.ifconfig.Services
 
         public void ApplyConfiguration(string targets)
         {
-            _logger.Log(LogLevel.Trace, "attempting to apply configuration for all targets in " +  targets + "... ");
+            _logger.Log(LogLevel.Trace, "attempting to apply configurations for all targets in " + targets + "... ");
 
             try
             {
                 TargetConfiguration targetConfiguration = _targetConfigurationRepository.GetConfigurationFromFile(targets);
 
-                _logger.Log(LogLevel.Trace, "successfully retrieved target configuration from file " + targets);
+                _logger.Log(LogLevel.Trace, "successfully retrieved configurations for all targets from file " + targets + "... ");
 
                 string homeDirectoryPath = _environmentVariableRepistory.GetHomeDirectory();
 
@@ -54,8 +54,12 @@ namespace ifcodes.ifconfig.Services
                     {
                         string absoluteTargetDirectory = _fileSystem.Path.Combine(new[] { homeDirectoryPath, configurableApplication.TargetDirectory });
 
+                        _logger.Log(LogLevel.Trace, "checking if target directory " + absoluteTargetDirectory + " exists ...");
+
                         if (!_fileSystem.Directory.Exists(absoluteTargetDirectory))
                         {
+                            _logger.Log(LogLevel.Trace, "target directory does not exist at " + absoluteTargetDirectory + " ...");
+
                             _logger.Log(LogLevel.Trace, "attempting to create directory " + absoluteTargetDirectory + "... ");
 
                             _fileSystem.Directory.CreateDirectory(absoluteTargetDirectory);
@@ -65,28 +69,21 @@ namespace ifcodes.ifconfig.Services
 
                         string targetAbsoluteFilePath = _fileSystem.Path.Combine(new[] { absoluteTargetDirectory, sourceFileName });
 
-                        if (!_fileSystem.Directory.Exists(targetAbsoluteFilePath))
+                        _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+
+                        if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
                         {
-                            _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+                            IFileInfo file = (IFileInfo)_fileSystem.File.CreateSymbolicLink(targetAbsoluteFilePath, sourceAbsoluteFilePath);
 
-                            if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
+                            if (file.Exists)
                             {
-                                IFileInfo file = (IFileInfo)_fileSystem.File.CreateSymbolicLink(targetAbsoluteFilePath, sourceAbsoluteFilePath);
-
-                                if (file.Exists)
-                                {
-                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for ");
-                                }
-                                else
-                                {
-                                    //when will this happened?
-                                    //i think i can remove this 
-                                    //not sure why this would happen?
-                                    _logger.Log(LogLevel.Information, "was not able to apply " + sourceFileName + " for ");
-                                }
+                                _logger.Log(LogLevel.Information, "successfully applied " + file.Name);
                             }
                         }
-
+                        else
+                        {
+                            _logger.Log(LogLevel.Information, "configuration already exists at " + targetAbsoluteFilePath);
+                        }
                     }
                 }
             }
@@ -135,11 +132,7 @@ namespace ifcodes.ifconfig.Services
 
                                 if (directory.Exists(absoluteTargetDirectory))
                                 {
-                                    _logger.Log(LogLevel.Trace, "successfully created target directory at " + absoluteTargetDirectory + " ..." );
-                                }
-                                else
-                                {
-                                    //whould should i do here?
+                                    _logger.Log(LogLevel.Trace, "successfully created target directory at " + absoluteTargetDirectory + " ...");
                                 }
                             }
                             else
@@ -151,27 +144,20 @@ namespace ifcodes.ifconfig.Services
 
                             string targetAbsoluteFilePath = _fileSystem.Path.Combine(new[] { absoluteTargetDirectory, sourceFileName });
 
-                            if (!_fileSystem.Directory.Exists(targetAbsoluteFilePath))
+                            _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+
+                            if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
                             {
-                                _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+                                IFileInfo file = (IFileInfo)_fileSystem.File.CreateSymbolicLink(targetAbsoluteFilePath, sourceAbsoluteFilePath);
 
-                                if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
+                                if (file.Exists)
                                 {
-                                    IFileInfo file = (IFileInfo)_fileSystem.File.CreateSymbolicLink(targetAbsoluteFilePath, sourceAbsoluteFilePath);
-
-                                    if (file.Exists)
-                                    {
-                                        _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application);
-                                    }
-                                    else
-                                    {
-                                        //whould should i do here?
-                                    }
+                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application);
                                 }
                             }
                             else
                             {
-                                //whould should i do here?
+                                _logger.Log(LogLevel.Information, "configuration already exists for " + application + " at " + targetAbsoluteFilePath);
                             }
                         }
                     }
@@ -202,18 +188,18 @@ namespace ifcodes.ifconfig.Services
                     _logger.Log(LogLevel.Trace, "");
 
                     string configurationDirectory = _fileSystem.Path.Combine(new[] { targetConfiguration.RepositoryPath, configurableApplication.Name });
-                    
+
                     //absolute paths to configuration files stored in .dotfiles directories
                     string[] sourceFilePaths = _targetConfigurationRepository.GetSourcePathsFromConfigurationRepository(configurationDirectory);
-                    
+
                     foreach (string sourceAbsoluteFilePath in sourceFilePaths)
                     {
                         string absoluteTargetDirectory = _fileSystem.Path.Combine(new[] { homeDirectoryPath, configurableApplication.TargetDirectory });
-                    
+
                         string sourceFileName = _fileSystem.Path.GetFileName(sourceAbsoluteFilePath);
-                    
+
                         string targetAbsoluteFilePath = _fileSystem.Path.Combine(new[] { absoluteTargetDirectory, sourceFileName });
-                    
+
                         _fileSystem.File.Delete(targetAbsoluteFilePath);
                     }
                 }
@@ -268,7 +254,6 @@ namespace ifcodes.ifconfig.Services
             {
                 throw new Exception("unrecoverable error occurred while attempting to remove configuration for " + application + ".", ex);
             }
-
         }
     }
 }

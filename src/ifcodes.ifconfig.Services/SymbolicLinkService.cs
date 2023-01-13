@@ -183,7 +183,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_APPLYING_CONFIGURATION + application, ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration for" + application, ex);
             }
         }
 
@@ -220,9 +220,8 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_APPLYING_CONFIGURATION, ex);
+                throw new Exception("unrecoverable error occurred while attempting to remove all configurations.", ex);
             }
-
         }
 
         public void RemoveConfiguration(string targets, string application)
@@ -267,7 +266,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_APPLYING_CONFIGURATION + application, ex);
+                throw new Exception("unrecoverable error occurred while attempting to remove configuration for " + application + ".", ex);
             }
 
         }

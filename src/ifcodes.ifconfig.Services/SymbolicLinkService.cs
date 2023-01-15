@@ -78,7 +78,7 @@ namespace ifcodes.ifconfig.Services
 
                         string targetAbsoluteFilePath = _fileSystem.Path.Combine(new[] { absoluteTargetDirectory, sourceFileName });
 
-                        _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+                        _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath + " ...");
 
                         if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
                         {
@@ -86,19 +86,19 @@ namespace ifcodes.ifconfig.Services
 
                             if (file.Exists)
                             {
-                                _logger.Log(LogLevel.Information, "successfully applied " + file.Name);
+                                _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " ...");
                             }
                         }
                         else
                         {
-                            _logger.Log(LogLevel.Information, "configuration already exists at " + targetAbsoluteFilePath);
+                            _logger.Log(LogLevel.Information, "configuration already exists at " + targetAbsoluteFilePath + " ...");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to apply configuration.", ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration ...", ex);
             }
         }
 
@@ -110,7 +110,7 @@ namespace ifcodes.ifconfig.Services
             {
                 TargetConfiguration targetConfiguration = _targetConfigurationRepository.GetConfigurationFromFile(targets);
 
-                _logger.Log(LogLevel.Trace, "successfully retrieved target configuration from file " + targets);
+                _logger.Log(LogLevel.Trace, "successfully retrieved target configuration from file " + targets + " ...");
 
                 string homeDirectoryPath = _environmentVariableRepistory.GetHomeDirectory();
 
@@ -153,7 +153,7 @@ namespace ifcodes.ifconfig.Services
 
                             string targetAbsoluteFilePath = _fileSystem.Path.Combine(new[] { absoluteTargetDirectory, sourceFileName });
 
-                            _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath);
+                            _logger.Log(LogLevel.Trace, "attempting to create symbolic link from " + sourceAbsoluteFilePath + " to " + targetAbsoluteFilePath + " ...");
 
                             if (!_fileSystem.File.Exists(targetAbsoluteFilePath))
                             {
@@ -161,12 +161,12 @@ namespace ifcodes.ifconfig.Services
 
                                 if (file.Exists)
                                 {
-                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application);
+                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application + " ...");
                                 }
                             }
                             else
                             {
-                                _logger.Log(LogLevel.Information, "configuration already exists for " + application + " at " + targetAbsoluteFilePath);
+                                _logger.Log(LogLevel.Information, "configuration already exists for " + application + " at " + targetAbsoluteFilePath + " ...");
                             }
                         }
                     }
@@ -178,24 +178,24 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to apply configuration for" + application, ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration for " + application + " ...", ex);
             }
         }
 
         public void RemoveConfiguration(string targets)
         {
+            _logger.Log(LogLevel.Trace, "attempting to remove configurations for all targets in " + targets + "... ");
+
             try
             {
                 TargetConfiguration targetConfiguration = _targetConfigurationRepository.GetConfigurationFromFile(targets);
 
-                _logger.Log(LogLevel.Trace, "successfully retrieved target configuration from file " + targets);
+                _logger.Log(LogLevel.Trace, "successfully retrieved configurations for all targets from file " + targets + "... ");
 
                 string homeDirectoryPath = _environmentVariableRepistory.GetHomeDirectory();
 
                 foreach (Application configurableApplication in targetConfiguration.Applications)
                 {
-                    _logger.Log(LogLevel.Trace, "");
-
                     string configurationDirectory = _fileSystem.Path.Combine(new[] { targetConfiguration.RepositoryPath, configurableApplication.Name });
 
                     //absolute paths to configuration files stored in .dotfiles directories
@@ -221,13 +221,13 @@ namespace ifcodes.ifconfig.Services
 
         public void RemoveConfiguration(string targets, string application)
         {
-            _logger.Log(LogLevel.Trace, "attempting to remove configuration for " + application + " ...");
+            _logger.Log(LogLevel.Trace, "attempting to remove configuration(s) for " + application + " ...");
 
             try
             {
                 TargetConfiguration targetConfiguration = _targetConfigurationRepository.GetConfigurationFromFile(targets);
 
-                _logger.Log(LogLevel.Trace, "successfully retrieved target configuration from file " + targets);
+                _logger.Log(LogLevel.Trace, "successfully retrieved configurations for all targets from file " + targets + "... ");
 
                 string homeDirectoryPath = _environmentVariableRepistory.GetHomeDirectory();
 
@@ -235,8 +235,6 @@ namespace ifcodes.ifconfig.Services
                 {
                     if (configurableApplication.IsSameNameAs(application))
                     {
-                        _logger.Log(LogLevel.Trace, "configurations available for " + application + " begin configuration application process ...");
-
                         string configurationDirectory = _fileSystem.Path.Combine(new[] { targetConfiguration.RepositoryPath, configurableApplication.Name });
 
                         //absolute paths to configuration files stored in .dotfiles directories
@@ -255,7 +253,7 @@ namespace ifcodes.ifconfig.Services
                     }
                     else
                     {
-                        _logger.Log(LogLevel.Information, "");
+                        _logger.Log(LogLevel.Information, "no configurations available to remove for " + application + " ...");
                     }
                 }
             }

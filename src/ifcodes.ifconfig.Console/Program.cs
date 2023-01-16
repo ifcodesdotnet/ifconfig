@@ -34,14 +34,20 @@ namespace ifcodes.ifconfig.Console
 
                 ParserResult<object> result = parser.ParseArguments<ApplyOptions, RemoveOptions>(args);
 
-                return result.MapResult(
+                int code = result.MapResult(
                     (ApplyOptions options) => ExecutionContext.ExecuteApply(options),
                     (RemoveOptions options) => ExecutionContext.ExecuteRemove(options),
                     errors => ExecutionContext.HandleErrors(result, errors));
+
+                System.Console.ReadKey(true);
+
+                return code; 
             }
             catch (Exception ex)
             {
                 Log.Fatal(ex, ex.Message);
+
+                System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);
             }

@@ -5,6 +5,7 @@ using System;
 using ifcodes.ifconfig.Repoistory.Abstractions;
 using ifcodes.ifconfig.Services.Abstractions;
 using System.IO.Abstractions;
+using System.Threading;
 #endregion
 
 namespace ifcodes.ifconfig.Services
@@ -98,7 +99,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to apply configuration ...", ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration ... ", ex);
             }
         }
 
@@ -178,7 +179,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to apply configuration for " + application + " ...", ex);
+                throw new Exception("unrecoverable error occurred while attempting to apply configuration for " + application + " ... ", ex);
             }
         }
 
@@ -215,7 +216,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to remove all configurations.", ex);
+                throw new Exception("unrecoverable error occurred while attempting to remove all configurations. ", ex);
             }
         }
 
@@ -259,7 +260,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to remove configuration for " + application + ".", ex);
+                throw new Exception("unrecoverable error occurred while attempting to remove configuration for " + application + "... ", ex);
             }
         }
     }

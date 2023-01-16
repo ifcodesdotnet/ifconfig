@@ -95,7 +95,7 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("fatal: " + ex.Message);
+                System.Console.Write("fatal: " + ex.Message);
 
                 _logger.Log(LogLevel.Critical, ex, ex.Message);  
 
@@ -117,7 +117,7 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("fatal: " + ex.Message);
+                System.Console.Write("fatal: " + ex.Message);
 
                 _logger.Log(LogLevel.Critical, ex.Message);
 
@@ -134,7 +134,7 @@ namespace ifcodes.ifconfig.Console
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);
 
-            System.Console.WriteLine(helpText);
+            System.Console.Write(helpText);
 
             return Convert.ToInt32(ExitCode.Failure);
         }

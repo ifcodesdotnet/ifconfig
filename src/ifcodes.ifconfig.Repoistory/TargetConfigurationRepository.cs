@@ -30,15 +30,15 @@ namespace ifcodes.ifconfig.Repoistory
             }
             catch (JsonReaderException ex)
             {
-                throw new JsonReaderException(Constants.Messaging.TARGETS_INVALID_JSON, ex); 
+                throw new JsonReaderException("targets.json contains invalid json.", ex); 
             }
             catch (FileNotFoundException ex)
             {
-                throw new FileNotFoundException(Constants.Messaging.TARGETS_NOT_FOUND, path ,ex);
+                throw new FileNotFoundException("targets.json not found in specified path.", path ,ex);
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_READING_TARGETS, ex);
+                throw new Exception("unrecoverable error occurred when reading targets.json.", ex);
             }
         }
 
@@ -46,15 +46,15 @@ namespace ifcodes.ifconfig.Repoistory
         {
             try
             {
-                return _fileSystem.Directory.GetFiles(path, Constants.Characters.ASTERISK, SearchOption.AllDirectories);
+                return _fileSystem.Directory.GetFiles(path, "*", SearchOption.AllDirectories);
             }
             catch (DirectoryNotFoundException ex)
             {
-                throw new DirectoryNotFoundException(Constants.Messaging.CONFIGURATION_REPOSITORY_DIRECTORY_NOT_FOUND, ex);
+                throw new DirectoryNotFoundException("unable to find configuration repository directory.", ex);
             }
             catch (Exception ex)
             {
-                throw new Exception(Constants.Messaging.UNRECOVERABLE_ERROR_GETTING_SOURCE_PATHS, ex);
+                throw new Exception("unrecoverable error occurred while attempting to get source paths from configuration repository.", ex);
             }
         }
     }

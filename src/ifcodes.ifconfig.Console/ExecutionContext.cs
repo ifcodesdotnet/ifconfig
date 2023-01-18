@@ -79,7 +79,7 @@ namespace ifcodes.ifconfig.Console
 
                 if (!string.IsNullOrEmpty(options.Application))
                 {
-                    if (options.Application.ToLower() == "all")
+                    if (options.IsApplicationAll())
                     {
                         _symLinkservice.ApplyConfiguration(options.Targets);
                     }

@@ -8,7 +8,6 @@ using ifcodes.ifconfig.Services;
 using ifcodes.ifconfig.Services.Abstractions;
 using ifcodes.ifconfig.Types;
 using ifcodes.ifutilities.ifhosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -71,33 +70,26 @@ namespace ifcodes.ifconfig.Console
 
         public static int ExecuteApply(ApplyOptions options)
         {
-            ILogger<ExecutionContext> _logger = _host.Services.GetService<ILogger<ExecutionContext>>();
-
             try
             {
                 ISymbolicLinkService _symLinkservice = _host.Services.GetService<ISymbolicLinkService>();
 
-                if (!string.IsNullOrEmpty(options.Application))
+                if (options.IsApplicationAll())
                 {
-                    if (options.IsApplicationAll())
-                    {
-                        _symLinkservice.ApplyConfiguration(options.Targets);
-                    }
-                    else
-                    {
-                        _symLinkservice.ApplyConfiguration(options.Targets, options.Application);
-                    }
-
-                    return Convert.ToInt32(ExitCode.Success);
+                    _symLinkservice.ApplyConfiguration(options.Targets);
+                }
+                else
+                {
+                    _symLinkservice.ApplyConfiguration(options.Targets, options.Application);
                 }
 
-                return Convert.ToInt32(ExitCode.Failure);
+                return Convert.ToInt32(ExitCode.Success);
             }
             catch (Exception ex)
             {
-                System.Console.Write("fatal: " + ex.Message);
+                System.Console.WriteLine();
 
-                _logger.Log(LogLevel.Critical, ex, ex.Message);  
+                System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);
             }

@@ -2,7 +2,6 @@
 using CommandLine;
 using ifcodes.ifconfig.Console.Verbs;
 using System;
-using Serilog;
 using ifcodes.ifconfig.Types;
 #endregion
 
@@ -10,18 +9,6 @@ namespace ifcodes.ifconfig.Console
 {
     internal class Program
     {
-        #region Initialize Static Logger 
-        static Program()
-        {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(
-                 outputTemplate: "{Level} {Message:l}{NewLine} {Exception}"
-                )
-                .MinimumLevel.Information()
-                .CreateBootstrapLogger();
-        } 
-        #endregion
-
         static int Main(string[] args)
         {
             try
@@ -34,26 +21,18 @@ namespace ifcodes.ifconfig.Console
 
                 ParserResult<object> result = parser.ParseArguments<ApplyOptions, RemoveOptions>(args);
 
-                int code = result.MapResult(
+                return result.MapResult(
                     (ApplyOptions options) => ExecutionContext.ExecuteApply(options),
                     (RemoveOptions options) => ExecutionContext.ExecuteRemove(options),
                     errors => ExecutionContext.HandleErrors(result, errors));
-
-                System.Console.ReadKey(true);
-
-                return code; 
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, ex.Message);
+                System.Console.WriteLine("failure in main");
 
                 System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);
-            }
-            finally
-            {
-                Log.CloseAndFlush();
             }
         }
     }

@@ -43,22 +43,19 @@ namespace ifcodes.ifconfig.Console
                     })
                     .UseSerilog((context, services, configuration) =>
                     {
+                        configuration.WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv"
+                                , hooks: new HeaderWriter("Timestamp,Level,Message,Exception"));
+                        
                         if (environment.Contains("debug"))
                         {
-                            configuration.WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv"
-                               , hooks: new HeaderWriter("Timestamp,Level,Message,Exception")
-                               )
-                           .MinimumLevel.Verbose()
-                           .MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+                            configuration.MinimumLevel.Verbose();
                         }
                         else
                         {
-                            configuration.WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv"
-                                , hooks: new HeaderWriter("Timestamp,Level,Message,Exception")
-                                )
-                            .MinimumLevel.Information()
-                            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+                            configuration.MinimumLevel.Information();
                         }
+
+                        configuration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
                     })
                     .Start();
             }

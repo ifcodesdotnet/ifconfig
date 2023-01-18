@@ -7,6 +7,9 @@ namespace ifcodes.ifconfig.Services.Abstractions
 
         void ApplyConfiguration(string path, string application); 
 
-        void RemoveConfiguration(string path, string configure); 
+        void RemoveConfiguration(string path, string configure);
+
+        void RemoveConfiguration(string path, string configure);
+
     }
 }

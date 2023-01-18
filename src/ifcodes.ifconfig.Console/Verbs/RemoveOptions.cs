@@ -13,5 +13,18 @@ namespace ifcodes.ifconfig.Console.Verbs
 
         [Option('a', "app", Required = true, HelpText = "app configuration to remove.")]
         public string Application { get; set; }
+
+        public bool IsApplicationAll()
+        {
+            if (!string.IsNullOrEmpty(this.Application))
+            {
+                if (this.Application.ToLower() == "all")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

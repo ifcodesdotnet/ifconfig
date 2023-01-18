@@ -36,6 +36,10 @@ namespace ifcodes.ifconfig.Repoistory
             {
                 throw new FileNotFoundException("targets.json not found in specified path.", path ,ex);
             }
+            catch (DirectoryNotFoundException ex)
+            {
+                throw new DirectoryNotFoundException("targets.json not found in specified path.", ex);
+            }
             catch (Exception ex)
             {
                 throw new Exception("unrecoverable error occurred when reading targets.json.", ex);

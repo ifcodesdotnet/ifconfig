@@ -16,6 +16,7 @@ using Serilog.Events;
 using Serilog.Sinks.File.Header;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Abstractions;
 #endregion
 
@@ -42,16 +43,15 @@ namespace ifcodes.ifconfig.Console
                     })
                     .UseSerilog((context, services, configuration) =>
                     {
-                        configuration.WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv"
-                                , hooks: new HeaderWriter("Timestamp,Level,Message,Exception"));
-                        
                         if (environment.Contains("debug"))
-                        {
-                            configuration.MinimumLevel.Verbose();
+                        { 
+                            configuration
+                            .WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv", hooks: new HeaderWriter("Timestamp,Level,Message,Exception"))
+                            .MinimumLevel.Verbose();
                         }
                         else
                         {
-                            configuration.MinimumLevel.Information();
+                            configuration.WriteTo.Console(outputTemplate: "{Message:l}{NewLine}").MinimumLevel.Verbose(); 
                         }
 
                         configuration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
@@ -67,6 +67,8 @@ namespace ifcodes.ifconfig.Console
 
         public static int ExecuteApply(ApplyOptions options)
         {
+            ILogger<ExecutionContext> _logger = _host.Services.GetService<ILogger<ExecutionContext>>();
+
             try
             {
                 ISymbolicLinkService _symLinkservice = _host.Services.GetService<ISymbolicLinkService>();
@@ -84,7 +86,7 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine();
+                _logger.Log(LogLevel.Critical, ex, ex.Message);
 
                 System.Console.ReadKey(true);
 
@@ -94,21 +96,24 @@ namespace ifcodes.ifconfig.Console
 
         public static int ExecuteRemove(RemoveOptions options)
         {
-            ILogger<ExecutionContext> _logger = _host.Services.GetService<ILogger<ExecutionContext>>();
-
             try
             {
                 ISymbolicLinkService _symLinkservice = _host.Services.GetService<ISymbolicLinkService>();
 
-                _symLinkservice.RemoveConfiguration(options.Targets, options.Application);
+                if (options.IsApplicationAll())
+                {
+                    _symLinkservice.RemoveConfiguration(options.Targets);
+                }
+                else
+                {
+                    _symLinkservice.RemoveConfiguration(options.Targets, options.Application);
+                }
 
                 return Convert.ToInt32(ExitCode.Success);
             }
             catch (Exception ex)
             {
-                System.Console.Write("fatal: " + ex.Message);
-
-                _logger.Log(LogLevel.Critical, ex.Message);
+                System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);
             }

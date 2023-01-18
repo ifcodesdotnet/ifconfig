@@ -2,7 +2,7 @@
   "profiles": {
     "ifconfig": {
       "commandName": "Project",
-      "commandLineArgs": "apply --app all --targets C:\\Users\\arbit\\.iffiles\\targets.json"
+      "commandLineArgs": "apply --app autohotkey --targets C:\\Users\\rbit\\.iffiles\\targets.json"
     }
   }
 }

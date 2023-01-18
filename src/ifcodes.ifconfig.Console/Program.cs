@@ -28,8 +28,6 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("failure in main");
-
                 System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);

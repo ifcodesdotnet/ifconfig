@@ -1,4 +1,5 @@
 ﻿#region Imports
+using System;
 using System.IO;
 using Serilog.Events;
 using Serilog.Formatting;
@@ -19,7 +20,14 @@ namespace ifcodes.ifconfig.Console
 
             if (logEvent.Exception != null)
             {
-                output.Write(logEvent.Exception.StackTrace);
+                string stackTrace = logEvent.Exception.StackTrace;
+
+                stackTrace = stackTrace.Replace(Environment.NewLine, string.Empty);
+
+                stackTrace = "\"" + stackTrace + "\""; 
+
+                output.Write(stackTrace);
+
                 output.Write(",");
             }
 

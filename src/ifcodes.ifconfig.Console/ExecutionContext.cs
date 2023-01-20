@@ -121,71 +121,72 @@ namespace ifcodes.ifconfig.Console
 
         public static int HandleErrors<T>(ParserResult<T> result, IEnumerable<Error> errors)
         {
+            //http://courses.cms.caltech.edu/cs11/material/general/usage.html
+
             foreach (Error error in errors)
             {
                 switch (error.Tag)
                 {
                     case ErrorType.NoVerbSelectedError:
                         {
-                            System.Console.WriteLine("usage: config [--version] [--help] <command> [<args>] \n");
+                            //no commands passed
+                            System.Console.WriteLine("usage: (if)config [--version] [--help] <command> [<args>] \n");
 
-                            System.Console.WriteLine("These are the possible config commands:");
+                            System.Console.WriteLine("Possible config commands:");
 
-                            System.Console.WriteLine("   apply              Create an empty Git repository or reinitialize an existing one");
-                            System.Console.WriteLine("   remove             Create an empty Git repository or reinitialize an existing one");
+                            System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
+                            System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
                     case ErrorType.HelpVerbRequestedError:
                         {
                             //--help
-                            HelpVerbRequestedError err = (HelpVerbRequestedError)error;
-
-                            System.Console.WriteLine("usage: config [--version] [--help] <command> [<args>] \n");
+                            System.Console.WriteLine("usage: (if)config [--version] [--help] <command> [<args>] \n");
 
                             System.Console.WriteLine("These are the possible config commands:");
 
-                            System.Console.WriteLine("   apply              Create an empty Git repository or reinitialize an existing one");
-                            System.Console.WriteLine("   remove             Create an empty Git repository or reinitialize an existing one");
+                            System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
+                            System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
                     case ErrorType.VersionRequestedError:
                         {
                             //--version 
-                            System.Console.WriteLine("ifconfig version 0.1.0-beta");
+                            System.Console.WriteLine("(if)config version 0.1.0-beta");
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
-                    case ErrorType.BadVerbSelectedError:
-                        {
-                            //blah --app autohotkey --targets --blah C:\\Users\\if\\.iffiles\\targets.json
+                    //case ErrorType.BadVerbSelectedError:
+                    //    {
+                    //        //blah --app autohotkey --targets --blah C:\\Users\\if\\.iffiles\\targets.json
 
-                            BadVerbSelectedError err = (BadVerbSelectedError)error;
+                    //        BadVerbSelectedError err = (BadVerbSelectedError)error;
 
-                            System.Console.WriteLine("error in verb");
+                    //        System.Console.WriteLine("error in verb");
 
-                            return Convert.ToInt32(ExitCode.Failure);
-                        }
-                    case ErrorType.MissingRequiredOptionError:
-                        {
-                            //apply --app autohotkey 
-                            //or 
-                            //apply --targets C:\\Users\\if\\.iffiles\\targets.json
+                    //        return Convert.ToInt32(ExitCode.Failure);
+                    //    }
+                    //case ErrorType.MissingRequiredOptionError:
+                    //    {
+                    //        //apply --app autohotkey 
+                    //        //or 
+                    //        //apply --targets C:\\Users\\if\\.iffiles\\targets.json
 
-                            MissingRequiredOptionError err = (MissingRequiredOptionError)error;
+                    //        MissingRequiredOptionError err = (MissingRequiredOptionError)error;
 
-                            if (err.NameInfo.LongName == "targets")
-                            {
-                                System.Console.WriteLine("fatal: <targets | t> argument must be passed \n");
-                            }
-                            else if (err.NameInfo.LongName == "app")
-                            {
-                                System.Console.WriteLine("fatal: <app | a> argument must be passed \n");
-                            }
+                    //        if (err.NameInfo.LongName == "targets")
+                    //        {
+                    //            System.Console.WriteLine("fatal: <targets | t> argument must be passed \n");
+                    //        }
+                    //        else if (err.NameInfo.LongName == "app")
+                    //        {
+                    //            System.Console.WriteLine("fatal: <app | a> argument must be passed \n");
+                    //        }
 
-                            return Convert.ToInt32(ExitCode.Failure);
-                        }
+                    //        return Convert.ToInt32(ExitCode.Failure);
+                    //    }
 
                 }
             }

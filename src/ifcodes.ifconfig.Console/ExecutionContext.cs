@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Abstractions;
+using System.Reflection.Emit;
 #endregion
 
 namespace ifcodes.ifconfig.Console
@@ -44,14 +45,16 @@ namespace ifcodes.ifconfig.Console
                     .UseSerilog((context, services, configuration) =>
                     {
                         if (environment.Contains("debug"))
-                        { 
+                        {
                             configuration
-                            .WriteTo.File(new CSVFormatter(), ".\\Logs\\log.csv", hooks: new HeaderWriter("Timestamp,Level,Message,Exception"))
+                            .WriteTo.Console(outputTemplate: "{Message:l}{NewLine}{Exception}")
                             .MinimumLevel.Verbose();
                         }
                         else
                         {
-                            configuration.WriteTo.Console(outputTemplate: "{Message:l}{NewLine}").MinimumLevel.Verbose(); 
+                            configuration
+                            .WriteTo.Console(outputTemplate: "{Message:l}{NewLine}")
+                            .MinimumLevel.Information(); 
                         }
 
                         configuration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
@@ -137,6 +140,8 @@ namespace ifcodes.ifconfig.Console
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
+                            System.Console.ReadKey();
+
                             return Convert.ToInt32(ExitCode.Success);
                         }
                     case ErrorType.HelpVerbRequestedError:
@@ -149,12 +154,16 @@ namespace ifcodes.ifconfig.Console
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
+                            System.Console.ReadKey();
+
                             return Convert.ToInt32(ExitCode.Success);
                         }
                     case ErrorType.VersionRequestedError:
                         {
                             //--version 
                             System.Console.WriteLine("(if)config version 0.1.0-beta");
+
+                            System.Console.ReadKey();
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
@@ -190,7 +199,6 @@ namespace ifcodes.ifconfig.Console
 
                 }
             }
-
             return Convert.ToInt32(ExitCode.Failure);
         }
     }

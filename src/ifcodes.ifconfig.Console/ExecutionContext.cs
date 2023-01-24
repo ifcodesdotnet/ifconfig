@@ -1,6 +1,5 @@
 ﻿#region Imports
 using CommandLine;
-using CommandLine.Text;
 using ifcodes.ifconfig.Console.Verbs;
 using ifcodes.ifconfig.Repoistory;
 using ifcodes.ifconfig.Repoistory.Abstractions;
@@ -12,13 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
-using Serilog.Sinks.File.Header;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO.Abstractions;
-using System.Reflection.Emit;
 #endregion
 
 namespace ifcodes.ifconfig.Console
@@ -89,7 +86,7 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Critical, ex, ex.Message);
+                _logger.Log(LogLevel.Critical, ex.Message);
 
                 System.Console.ReadKey(true);
 
@@ -99,6 +96,8 @@ namespace ifcodes.ifconfig.Console
 
         public static int ExecuteRemove(RemoveOptions options)
         {
+            ILogger<ExecutionContext> _logger = _host.Services.GetService<ILogger<ExecutionContext>>();
+
             try
             {
                 ISymbolicLinkService _symLinkservice = _host.Services.GetService<ISymbolicLinkService>();
@@ -116,6 +115,8 @@ namespace ifcodes.ifconfig.Console
             }
             catch (Exception ex)
             {
+                _logger.Log(LogLevel.Critical, ex.Message);
+
                 System.Console.ReadKey(true);
 
                 return Convert.ToInt32(ExitCode.Failure);
@@ -140,7 +141,7 @@ namespace ifcodes.ifconfig.Console
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
-                            System.Console.ReadKey();
+                            System.Console.ReadKey(true);
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
@@ -149,12 +150,12 @@ namespace ifcodes.ifconfig.Console
                             //--help
                             System.Console.WriteLine("usage: (if)config [--version] [--help] <command> [<args>] \n");
 
-                            System.Console.WriteLine("These are the possible config commands:");
+                            System.Console.WriteLine("Possible config commands:");
 
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
 
-                            System.Console.ReadKey();
+                            System.Console.ReadKey(true);
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
@@ -163,40 +164,40 @@ namespace ifcodes.ifconfig.Console
                             //--version 
                             System.Console.WriteLine("(if)config version 0.1.0-beta");
 
-                            System.Console.ReadKey();
+                            System.Console.ReadKey(true);
 
                             return Convert.ToInt32(ExitCode.Success);
                         }
-                    //case ErrorType.BadVerbSelectedError:
-                    //    {
-                    //        //blah --app autohotkey --targets --blah C:\\Users\\if\\.iffiles\\targets.json
+                    case ErrorType.BadVerbSelectedError:
+                        {
+                            //blah --app autohotkey --targets --blah C:\\Users\\if\\.iffiles\\targets.json
 
-                    //        BadVerbSelectedError err = (BadVerbSelectedError)error;
+                            BadVerbSelectedError err = (BadVerbSelectedError)error;
 
-                    //        System.Console.WriteLine("error in verb");
+                            //got this wording / format from doing git test
+                            System.Console.WriteLine("(if)config: " + err.Token + " is not a (if)config command. See '(if)config --help'.");
 
-                    //        return Convert.ToInt32(ExitCode.Failure);
-                    //    }
-                    //case ErrorType.MissingRequiredOptionError:
-                    //    {
-                    //        //apply --app autohotkey 
-                    //        //or 
-                    //        //apply --targets C:\\Users\\if\\.iffiles\\targets.json
+                            return Convert.ToInt32(ExitCode.Failure);
+                        }
+                    case ErrorType.MissingRequiredOptionError:
+                        {
+                            //apply --app autohotkey 
+                            //or 
+                            //apply --targets C:\\Users\\if\\.iffiles\\targets.json
 
-                    //        MissingRequiredOptionError err = (MissingRequiredOptionError)error;
+                            MissingRequiredOptionError err = (MissingRequiredOptionError)error;
 
-                    //        if (err.NameInfo.LongName == "targets")
-                    //        {
-                    //            System.Console.WriteLine("fatal: <targets | t> argument must be passed \n");
-                    //        }
-                    //        else if (err.NameInfo.LongName == "app")
-                    //        {
-                    //            System.Console.WriteLine("fatal: <app | a> argument must be passed \n");
-                    //        }
+                            if (err.NameInfo.LongName == "targets")
+                            {
+                                System.Console.WriteLine("fatal: <targets | t> argument must be passed \n");
+                            }
+                            else if (err.NameInfo.LongName == "app")
+                            {
+                                System.Console.WriteLine("fatal: <app | a> argument must be passed \n");
+                            }
 
-                    //        return Convert.ToInt32(ExitCode.Failure);
-                    //    }
-
+                            return Convert.ToInt32(ExitCode.Failure);
+                        }
                 }
             }
             return Convert.ToInt32(ExitCode.Failure);

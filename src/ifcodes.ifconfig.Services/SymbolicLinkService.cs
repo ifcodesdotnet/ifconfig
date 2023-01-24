@@ -98,7 +98,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("unrecoverable error occurred while attempting to apply configuration ... ", ex);
+                throw new Exception("fatal: " + ex.Message);
             }
         }
 
@@ -178,7 +178,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("fatal: " + ex.Message);
             }
         }
 
@@ -215,7 +215,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("fatal: " + ex.Message);
             }
         }
 
@@ -259,7 +259,7 @@ namespace ifcodes.ifconfig.Services
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("fatal: " + ex.Message);
             }
         }
     }

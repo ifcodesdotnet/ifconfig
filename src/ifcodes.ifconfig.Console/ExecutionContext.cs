@@ -192,11 +192,11 @@ namespace ifcodes.ifconfig.Console
 
                             if (err.NameInfo.LongName == "targets")
                             {
-                                System.Console.WriteLine("fatal: <targets | t> argument must be passed \n");
+                                System.Console.WriteLine("fatal: <targets|t> argument must be passed \n");
                             }
                             else if (err.NameInfo.LongName == "app")
                             {
-                                System.Console.WriteLine("fatal: <app | a> argument must be passed \n");
+                                System.Console.WriteLine("fatal: <app|a> argument must be passed \n");
                             }
 
                             return Convert.ToInt32(ExitCode.Failure);

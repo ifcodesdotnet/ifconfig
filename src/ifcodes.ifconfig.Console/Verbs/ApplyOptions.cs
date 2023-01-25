@@ -10,7 +10,6 @@ namespace ifcodes.ifconfig.Console.Verbs
         [Option('t', "targets", Required = true, HelpText = "path to targets file.")]
         public string Targets { get; set; }
 
-
         [Option('a', "app", Required = true, HelpText = "app to configure, setting this to all will apply configuration to all applications in target configuration.")]
         public string Application { get; set; }
 

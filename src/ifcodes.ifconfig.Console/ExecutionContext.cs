@@ -1,5 +1,6 @@
 ﻿#region Imports
 using CommandLine;
+using CommandLine.Text;
 using ifcodes.ifconfig.Console.Verbs;
 using ifcodes.ifconfig.Repoistory;
 using ifcodes.ifconfig.Repoistory.Abstractions;
@@ -10,12 +11,14 @@ using ifcodes.ifutilities.ifhosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
+using System.Linq;
 #endregion
 
 namespace ifcodes.ifconfig.Console
@@ -136,7 +139,7 @@ namespace ifcodes.ifconfig.Console
                             //no commands passed
                             System.Console.WriteLine("usage: (if)config [--version] [--help] <command> [<args>] \n");
 
-                            System.Console.WriteLine("Possible config commands:");
+                            System.Console.WriteLine("possible config commands:");
 
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
@@ -150,7 +153,7 @@ namespace ifcodes.ifconfig.Console
                             //--help
                             System.Console.WriteLine("usage: (if)config [--version] [--help] <command> [<args>] \n");
 
-                            System.Console.WriteLine("Possible config commands:");
+                            System.Console.WriteLine("possible config commands:");
 
                             System.Console.WriteLine("   apply              Apply configurations from .dotfiles directory based on app and targets");
                             System.Console.WriteLine("   remove             Remove configurations from .dotfiles directory based on app and targets");
@@ -197,6 +200,36 @@ namespace ifcodes.ifconfig.Console
                             }
 
                             return Convert.ToInt32(ExitCode.Failure);
+                        }
+                    case ErrorType.HelpRequestedError:
+                        {
+                            string verb = result.TypeInfo.Current.Name;
+
+                            verb = verb.ToLower(); 
+
+                            if (verb.Contains("apply"))
+                            {
+                                verb = "apply";
+
+                                System.Console.WriteLine("usage: config " + verb + " <targets|t> <app|a> \n");
+                                System.Console.WriteLine("required command args:");
+                                System.Console.WriteLine("    targets           Absolute path to targets file");
+                                System.Console.WriteLine("    app               Application to configure from targets file entry");
+                            }
+
+                            if (verb.Contains("remove"))
+                            {
+                                verb = "remove";
+
+                                System.Console.WriteLine("usage: config " + verb + " <targets|t> <app|a> \n");
+                                System.Console.WriteLine("required command args:");
+                                System.Console.WriteLine("    targets           Absolute path to targets file");
+                                System.Console.WriteLine("    app               Application to configure from targets file entry");
+                            }
+
+                            System.Console.ReadKey(true);
+
+                            return Convert.ToInt32(ExitCode.Success);
                         }
                 }
             }

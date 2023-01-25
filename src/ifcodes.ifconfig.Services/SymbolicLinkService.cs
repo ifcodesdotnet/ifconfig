@@ -86,7 +86,8 @@ namespace ifcodes.ifconfig.Services
 
                             if (file.Exists)
                             {
-                                _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " ...");
+                                _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " ... \n");
+
                             }
                         }
                         else
@@ -161,7 +162,7 @@ namespace ifcodes.ifconfig.Services
 
                                 if (file.Exists)
                                 {
-                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application + " ...");
+                                    _logger.Log(LogLevel.Information, "successfully applied " + file.Name + " for " + application + " ... \n");
                                 }
                             }
                             else

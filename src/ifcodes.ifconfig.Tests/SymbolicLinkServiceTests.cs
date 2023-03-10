@@ -22,7 +22,7 @@ namespace ifcodes.ifconfig.Tests
     internal class SymbolicLinkServiceTests
     {
         [Test]
-        public void TestApplyingConfiguration()
+        public void Successfully_Apply_Configuration()
         {
             //Arrange 
             Mock<ILogger<SymbolicLinkService>> mockLogger = new Mock<ILogger<SymbolicLinkService>>();
@@ -94,8 +94,25 @@ namespace ifcodes.ifconfig.Tests
 
             Assert.True(mockFileSystem.FileExists("C:\\Users\\test\\notes.txt"));
 
-        }//end method
+        }
 
+        [Test]
+        public void Successfully_Remove_Configuration()
+        {
+
+        }
+
+        [Test]
+        public void Successfully_Apply_All_Configurations()
+        {
+
+        }
+
+        [Test]
+        public void Successfully_Remove_All_Configurations()
+        {
+
+        }
 
     }
 }

@@ -1,6 +1,5 @@
 ﻿#region Imports
 using CommandLine;
-using CommandLine.Text;
 using ifcodes.ifconfig.Console.Verbs;
 using ifcodes.ifconfig.Repoistory;
 using ifcodes.ifconfig.Repoistory.Abstractions;
@@ -11,14 +10,11 @@ using ifcodes.ifutilities.ifhosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Core;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
-using System.Linq;
 #endregion
 
 namespace ifcodes.ifconfig.Console

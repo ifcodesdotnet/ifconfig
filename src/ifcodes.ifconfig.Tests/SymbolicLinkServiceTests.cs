@@ -21,6 +21,11 @@ namespace ifcodes.ifconfig.Tests
 
     internal class SymbolicLinkServiceTests
     {
+        //utilities for creating unit tests with hard coded data
+        //https://www.freeformatter.com/json-escape.html#before-output
+        //https://jsonformatter.curiousconcept.com/#
+
+
         [Test]
         public void Successfully_Apply_Configuration()
         {
